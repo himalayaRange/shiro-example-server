@@ -3,7 +3,7 @@ package cn.com.zygx.backFramework.common.tree;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import com.sun.org.apache.xalan.internal.utils.Objects;
+import java.util.Objects;
 
 /**
  * 该树形结构是针对easyui进行的封装，换做一种机构需要做相应的变更
