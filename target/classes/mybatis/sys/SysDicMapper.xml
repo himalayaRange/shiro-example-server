@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.zygx.backFramework.dao.ISysDicDao" >
+  <resultMap id="BaseResultMap" type="cn.com.zygx.backFramework.model.SysDic" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dic_code" property="dic_code" jdbcType="VARCHAR" />
+    <result column="dic_value" property="dic_value" jdbcType="INTEGER" />
+    <result column="dic_label" property="dic_label" jdbcType="VARCHAR" />
+    <result column="orders" property="orders" jdbcType="INTEGER" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="update_date" jdbcType="TIMESTAMP" />
+    <result column="is_valid" property="is_valid" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dic_code, dic_value, dic_label, orders, create_date, update_date, is_valid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_dic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="query" resultMap="BaseResultMap" parameterType="cn.com.zygx.backFramework.model.SysDic" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_dic
+    where 1=1 
+     <if test="dic_code != null" >
+       and  dic_code = #{dic_code,jdbcType=VARCHAR}
+      </if>
+      <if test="dic_value != null" >
+       and dic_value = #{dic_value,jdbcType=INTEGER}
+      </if>
+      <if test="dic_label != null" >
+       and  dic_label = #{dic_label,jdbcType=VARCHAR}
+      </if>
+      <if test="orders != null" >
+        and orders = #{orders,jdbcType=INTEGER}
+      </if>
+      <if test="create_date != null" >
+        and create_date = #{create_date,jdbcType=TIMESTAMP}
+      </if>
+      <if test="update_date != null" >
+        and update_date = #{update_date,jdbcType=TIMESTAMP}
+      </if>
+      <if test="is_valid != null" >
+        and is_valid = #{is_valid,jdbcType=BIT}
+      </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_dic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.zygx.backFramework.model.SysDic" >
+    insert into sys_dic (id, dic_code, dic_value, 
+      dic_label, orders, create_date, 
+      update_date, is_valid)
+    values (#{id,jdbcType=INTEGER}, #{dic_code,jdbcType=VARCHAR}, #{dic_value,jdbcType=INTEGER}, 
+      #{dic_label,jdbcType=VARCHAR}, #{orders,jdbcType=INTEGER}, #{create_date,jdbcType=TIMESTAMP}, 
+      #{update_date,jdbcType=TIMESTAMP}, #{is_valid,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.zygx.backFramework.model.SysDic" >
+    insert into sys_dic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dic_code != null" >
+        dic_code,
+      </if>
+      <if test="dic_value != null" >
+        dic_value,
+      </if>
+      <if test="dic_label != null" >
+        dic_label,
+      </if>
+      <if test="orders != null" >
+        orders,
+      </if>
+      <if test="create_date != null" >
+        create_date,
+      </if>
+      <if test="update_date != null" >
+        update_date,
+      </if>
+      <if test="is_valid != null" >
+        is_valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dic_code != null" >
+        #{dic_code,jdbcType=VARCHAR},
+      </if>
+      <if test="dic_value != null" >
+        #{dic_value,jdbcType=INTEGER},
+      </if>
+      <if test="dic_label != null" >
+        #{dic_label,jdbcType=VARCHAR},
+      </if>
+      <if test="orders != null" >
+        #{orders,jdbcType=INTEGER},
+      </if>
+      <if test="create_date != null" >
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null" >
+        #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="is_valid != null" >
+        #{is_valid,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="cn.com.zygx.backFramework.model.SysDic" >
+    update sys_dic
+    <set >
+      <if test="dic_code != null" >
+        dic_code = #{dic_code,jdbcType=VARCHAR},
+      </if>
+      <if test="dic_value != null" >
+        dic_value = #{dic_value,jdbcType=INTEGER},
+      </if>
+      <if test="dic_label != null" >
+        dic_label = #{dic_label,jdbcType=VARCHAR},
+      </if>
+      <if test="orders != null" >
+        orders = #{orders,jdbcType=INTEGER},
+      </if>
+      <if test="create_date != null" >
+        create_date = #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null" >
+        update_date = #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="is_valid != null" >
+        is_valid = #{is_valid,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+ 
+</mapper>

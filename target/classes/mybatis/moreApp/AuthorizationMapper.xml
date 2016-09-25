@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.zygx.backFramework.dao.AuthorizationDAO" >
+  <resultMap id="BaseResultMap" type="cn.com.zygx.backFramework.model.Authorization" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="user_id" jdbcType="BIGINT" />
+    <result column="app_id" property="app_id" jdbcType="BIGINT" />
+    <result column="role_ids" property="role_ids" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, app_id, role_ids
+  </sql>
+  
+  <insert id="createAuthorization" parameterType="cn.com.zygx.backFramework.model.Authorization" >
+    insert into sys_user_app_roles
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="user_id != null" >
+        user_id,
+      </if>
+      <if test="app_id != null" >
+        app_id,
+      </if>
+      <if test="role_ids != null" >
+        role_ids,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="user_id != null" >
+        #{user_id,jdbcType=BIGINT},
+      </if>
+      <if test="app_id != null" >
+        #{app_id,jdbcType=BIGINT},
+      </if>
+      <if test="role_ids != null" >
+        #{role_ids,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateAuthorization" parameterType="cn.com.zygx.backFramework.model.Authorization" >
+    update sys_user_app_roles
+    <set >
+      <if test="user_id != null" >
+        user_id = #{user_id,jdbcType=BIGINT},
+      </if>
+      <if test="app_id != null" >
+        app_id = #{app_id,jdbcType=BIGINT},
+      </if>
+      <if test="role_ids != null" >
+        role_ids = #{role_ids,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_app_roles
+    where id = #{authorizationId,jdbcType=BIGINT}
+  </select>
+  
+   <select id="findAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_app_roles
+  </select>
+  
+   <select id="findByAppUser" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_app_roles
+    where app_id = #{appId,jdbcType=BIGINT} and user_id=#{userId,jdbcType=BIGINT}
+  </select>
+  
+  
+</mapper>

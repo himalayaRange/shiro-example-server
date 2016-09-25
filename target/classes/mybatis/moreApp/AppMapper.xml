@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.zygx.backFramework.dao.AppDAO" >
+  <resultMap id="BaseResultMap" type="cn.com.zygx.backFramework.model.App" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="app_key" property="app_key" jdbcType="VARCHAR" />
+    <result column="app_secret" property="app_secret" jdbcType="VARCHAR" />
+    <result column="available" property="available" jdbcType="BIT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, name, app_key, app_secret, available
+  </sql>
+  
+   <insert id="createApp" parameterType="cn.com.zygx.backFramework.model.App" >
+     insert into sys_app
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="app_key != null" >
+        app_key,
+      </if>
+      <if test="app_secret != null" >
+        app_secret,
+      </if>
+      <if test="available != null" >
+        available,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="app_key != null" >
+        #{app_key,jdbcType=VARCHAR},
+      </if>
+      <if test="app_secret != null" >
+        #{app_secret,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null" >
+        #{available,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateApp" parameterType="cn.com.zygx.backFramework.model.App" >
+    update sys_app
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="app_key != null" >
+        app_key = #{app_key,jdbcType=VARCHAR},
+      </if>
+      <if test="app_secret != null" >
+        app_secret = #{app_secret,jdbcType=VARCHAR},
+      </if>
+      <if test="available != null" >
+        available = #{available,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <delete id="deleteApp" parameterType="java.lang.Long">
+  	delete from sys_app where id=#{appId,jdbcType=BIGINT}
+  </delete>
+  
+  
+  <select id="findOne" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_app
+    where id = #{appId,jdbcType=BIGINT}
+  </select>
+ 
+  
+  <select id="findAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_app
+  </select>
+  
+  <select id="findAppIdByAppKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id 
+    from sys_app
+    where app_key = #{appId,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

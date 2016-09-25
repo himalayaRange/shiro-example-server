@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.zygx.backFramework.dao.OAuth2ClientDao" >
+  <resultMap id="BaseResultMap" type="cn.com.zygx.backFramework.model.Oauth2Client" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="client_name" property="client_name" jdbcType="VARCHAR" />
+    <result column="client_id" property="client_id" jdbcType="VARCHAR" />
+    <result column="client_secret" property="client_secret" jdbcType="VARCHAR" />
+    <result column="create_date" property="create_date" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="update_date" jdbcType="TIMESTAMP" />
+    <result column="is_valid" property="is_valid" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, client_name, client_id, client_secret, create_date, update_date, is_valid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from oauth2_client
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  	<!--  根据客户端id 查找客户端 -->
+    <select id="findByClientId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oauth2_client
+    where client_id = #{clientId,jdbcType=VARCHAR}
+  	</select>
+  	
+  	<!-- 根据客户端安全KEY 查找客户端 -->
+  	<select id="findByClientSecret" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from oauth2_client
+    where client_secret = #{clientSecret,jdbcType=VARCHAR}
+  	</select>
+  	
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from oauth2_client
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.com.zygx.backFramework.model.Oauth2Client" >
+    insert into oauth2_client (id, client_name, client_id, 
+      client_secret, create_date, update_date, 
+      is_valid)
+    values (#{id,jdbcType=BIGINT}, #{client_name,jdbcType=VARCHAR}, #{client_id,jdbcType=VARCHAR}, 
+      #{client_secret,jdbcType=VARCHAR}, #{create_date,jdbcType=TIMESTAMP}, #{update_date,jdbcType=TIMESTAMP}, 
+      #{is_valid,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.zygx.backFramework.model.Oauth2Client" >
+    insert into oauth2_client
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="client_name != null" >
+        client_name,
+      </if>
+      <if test="client_id != null" >
+        client_id,
+      </if>
+      <if test="client_secret != null" >
+        client_secret,
+      </if>
+      <if test="create_date != null" >
+        create_date,
+      </if>
+      <if test="update_date != null" >
+        update_date,
+      </if>
+      <if test="is_valid != null" >
+        is_valid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="client_name != null" >
+        #{client_name,jdbcType=VARCHAR},
+      </if>
+      <if test="client_id != null" >
+        #{client_id,jdbcType=VARCHAR},
+      </if>
+      <if test="client_secret != null" >
+        #{client_secret,jdbcType=VARCHAR},
+      </if>
+      <if test="create_date != null" >
+        #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null" >
+        #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="is_valid != null" >
+        #{is_valid,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="update" parameterType="cn.com.zygx.backFramework.model.Oauth2Client" >
+    update oauth2_client
+    <set >
+      <if test="client_name != null" >
+        client_name = #{client_name,jdbcType=VARCHAR},
+      </if>
+      <if test="client_id != null" >
+        client_id = #{client_id,jdbcType=VARCHAR},
+      </if>
+      <if test="client_secret != null" >
+        client_secret = #{client_secret,jdbcType=VARCHAR},
+      </if>
+      <if test="create_date != null" >
+        create_date = #{create_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="update_date != null" >
+        update_date = #{update_date,jdbcType=TIMESTAMP},
+      </if>
+      <if test="is_valid != null" >
+        is_valid = #{is_valid,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+   <select id="query" resultMap="BaseResultMap" parameterType="cn.com.zygx.backFramework.model.Oauth2Client" >
+    select 
+    <include refid="Base_Column_List" />
+    from oauth2_client
+    where 1=1 
+     <if test="client_name != null" >
+        and client_name = #{client_name,jdbcType=VARCHAR}
+      </if>
+      <if test="client_id != null" >
+        and client_id = #{client_id,jdbcType=VARCHAR}
+      </if>
+      <if test="client_secret != null" >
+        and client_secret = #{client_secret,jdbcType=VARCHAR}
+      </if>
+      <if test="create_date != null" >
+        and create_date = #{create_date,jdbcType=TIMESTAMP}
+      </if>
+      <if test="update_date != null" >
+        and update_date = #{update_date,jdbcType=TIMESTAMP}
+      </if> 
+      <if test="is_valid != null" >
+        and is_valid = #{is_valid,jdbcType=TINYINT}
+      </if>
+  </select>
+</mapper>
